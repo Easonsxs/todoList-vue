@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/all.css">
+</head>
+
+<body>
+    <div id="app">
+        <h1>TODO LIST</h1>
+        <div class="inputText">
+            <!-- 綁定資料 -->
+            <input type="text" v-model="newTodo" @keyup.enter="addTodo">
+            <button @click="addTodo">新增</button>
+            <!-- click事件 觸發 addTodo方法 -->
+        </div>
+        <div class="option">
+            <!-- 頁籤加上css樣式，取決於visibility的值，點擊觸發函式更改visibility的值，過濾資料功能使用computed-->
+            <button :class="{active:visibility == 'all'}" @click="visibility = 'all'">全部</button>
+            <button :class="{active:visibility == 'active'}" @click="visibility = 'active'">進行中</button>
+            <button :class="{active:visibility == 'complete'}" @click="visibility = 'complete'">已完成</button>
+        </div>
+        <ul class="content">
+            <li v-for="(item,key) in filterTodo" @dblclick="editTodo(item)" >
+                <!-- 新增key帶到生成的自定義變數裡面，做刪除動作的時候才有指向性 -->
+                <!--資料來源從todos改成filterTodo，因為要透過visibility的值來判斷生成出的事項列表，所以需要從新的資料開始撈-->
+                <!-- 雙擊觸發事件 執行editTodo()，並帶入該item-->
+                <div v-if="item.id !== cacheTodo.id">
+                <!-- 判斷式，條件是id是否一樣，不一樣才會顯示。id是藉由建立的時間生成，若雙擊觸發editTodo()，
+                此時cacheTodo = item，id會一樣，若無點擊，則不一樣-->
+                <input type="checkbox" :id="item.id" v-model="item.completed">
+                <!-- 添加css屬性樣式，套用與否取決於item.completed的值(ture/false)-->
+                <label :for="item.id" :class="{complete:item.completed}">{{item.title}}</label>
+                <!-- 2個都要套用item.id，為了資料連動 -->
+                <a href="#" @click="removeTodo(key)">X</a></div>
+                <!-- 新增刪除功能 -->
+                <div class="text">
+                    <input type="text" 
+                    v-if="item.id == cacheTodo.id"
+                    v-model="cacheTitle"
+                    @keyup.esc="clearEdit()"
+                    @keyup.enter="doneEdit(item)">
+                    <!-- id一樣才會顯示 -->
+                    <!-- input輸入值等於cacheTitle的值 -->
+                    <!-- 按下esc鍵觸發函式，將cacheTodo變成空值，id也不存在，所以就會回到初始狀態 -->
+                </div>
+            </li>
+        </ul>
+        <div class="message">
+        	<p>還有{{message}}項任務未完成</p>
+        	<button @click="clearAll">清除所有任務</button>
+        </div>
+        <div class="usemessage">
+        	<h4>TODO LIST功能</h4>
+        	<p>(1)上方輸入欄寫下你想紀錄的事項，按下enter/新增按鈕，即可新增待辦事項</p>
+        	<p>(2)雙擊待辦事項可重新編輯，按下enter即可更新</p>
+        	<p>(3)每個項目具有完成功能(打勾和刪除線表示)以及刪除功能</p>
+        	<p>(4)上方按鈕能夠對事項進行分類顯示</p>
+        	<p>(5)下方粉紅色區域顯示未完成任務以及清除所有任務功能</p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="js/all.js"></script>
+</body>
+
+</html>
