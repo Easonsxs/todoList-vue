@@ -35,7 +35,7 @@
                 <!-- 添加css屬性樣式，套用與否取決於item.completed的值(ture/false)-->
                 <label :for="item.id" :class="{complete:item.completed}">{{item.title}}</label>
                 <!-- 2個都要套用item.id，為了資料連動 -->
-                <a href="#" @click="removeTodo(key)">X</a></div>
+                <a href="#" @click="removeTodo(item)">X</a></div>
                 <!-- 新增刪除功能 -->
                 <div class="text">
                     <input type="text" 

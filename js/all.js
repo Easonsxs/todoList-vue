@@ -29,8 +29,16 @@ var app = new Vue({
             // 新增完成之後將input輸入欄清空
         },
         // 刪除列表
-        removeTodo: function(key) {
-            this.todos.splice(key, 1);
+        removeTodo: function(todo) {
+            var newIndex = '';
+            var vm = this;
+            vm.todos.forEach(function(item,key){
+                if(todo.id == item.id){
+                    newIndex = key
+                }
+            });
+
+            this.todos.splice(newIndex, 1);
             // 刪除陣列裡面的資料，傳入索引值
 
         },
