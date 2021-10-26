@@ -7,4 +7,4 @@ TODO LIST功能<br>
 (4)上方按鈕能夠對事項進行分類顯示<br>
 (5)下方粉紅色區域顯示未完成任務以及清除所有任務功能<br>
 
-網頁顯示 https://easonsxs.github.io/todoList-vue/
+網頁顯示https://easonsxs.github.io/todoListVue/
